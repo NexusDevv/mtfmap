@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>مكتب شريف بلاين · بوليتو وساندي</title>
+<title>MTF · بوليتو وساندي</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Lalezar&family=Readex+Pro:wght@300;400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
@@ -250,14 +250,15 @@ svg .gt{fill:rgba(255,255,255,.55);font-family:var(--mono);font-size:9px;font-we
       <svg viewBox="0 0 120 120" aria-hidden="true">
         <defs>
           <linearGradient id="bg1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f6e2a6"/><stop offset=".5" stop-color="#d2a84e"/><stop offset="1" stop-color="#7a5a1a"/></linearGradient>
-          <radialGradient id="bg2" cx=".5" cy=".4" r=".6"><stop offset="0" stop-color="#26302a"/><stop offset="1" stop-color="#0d110f"/></radialGradient>
+          <linearGradient id="bg2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#26302a"/><stop offset="1" stop-color="#0d110f"/></linearGradient>
         </defs>
-        <path d="M60 6 L70 34 L100 24 L88 52 L114 60 L88 68 L100 96 L70 86 L60 114 L50 86 L20 96 L32 68 L6 60 L32 52 L20 24 L50 34 Z" fill="url(#bg1)" stroke="#5e430f"/>
-        <circle cx="60" cy="60" r="27" fill="url(#bg2)" stroke="#f2d58e" stroke-width="1.5"/>
-        <path d="M60 44 L64 55 L76 55 L66.5 62 L70 74 L60 67 L50 74 L53.5 62 L44 55 L56 55 Z" fill="url(#bg1)"/>
-        <g fill="#f6e2a6"><circle cx="60" cy="10" r="3.5"/><circle cx="110" cy="60" r="3.5"/><circle cx="60" cy="110" r="3.5"/><circle cx="10" cy="60" r="3.5"/></g>
+        <path d="M60 4 L108 20 L108 58 C108 86 88 106 60 116 C32 106 12 86 12 58 L12 20 Z" fill="url(#bg1)" stroke="#5e430f" stroke-width="1.5"/>
+        <path d="M60 12 L100 25.5 L100 58 C100 81 84 98 60 107 C36 98 20 81 20 58 L20 25.5 Z" fill="url(#bg2)"/>
+        <path d="M60 22 L63.5 31 L73 31 L65.5 36.5 L68.5 45.5 L60 40 L51.5 45.5 L54.5 36.5 L47 31 L56.5 31 Z" fill="url(#bg1)"/>
+        <text x="60" y="78" text-anchor="middle" font-family="JetBrains Mono,ui-monospace,monospace" font-weight="700" font-size="25" letter-spacing="1" fill="url(#bg1)">MTF</text>
+        <path d="M34 88 L60 96 L86 88" fill="none" stroke="url(#bg1)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
-      <div><b>شريف بلاين</b><small>قطاع بوليتو وساندي</small></div>
+      <div><b class="mono" style="font-family:var(--mono);font-weight:700;letter-spacing:.06em">MTF</b><small>قطاع بوليتو وساندي</small></div>
     </div>
     <nav class="tabs" role="tablist">
       <button role="tab" data-tab="map" aria-selected="true">الخريطة</button>
@@ -342,7 +343,7 @@ svg .gt{fill:rgba(255,255,255,.55);font-family:var(--mono);font-size:9px;font-we
     </div>
     <div class="chain" id="chain"></div>
   </section>
-  <p class="foot">مكتب شريف مقاطعة بلاين · قطاع بوليتو وساندي</p>
+  <p class="foot"><span class="mono">MTF</span> · قطاع بوليتو وساندي</p>
 </main>
 
 <aside class="drawer" id="drawer" hidden role="dialog" aria-modal="false"></aside>
@@ -585,7 +586,7 @@ function renderWanted(){
     <h3>${esc(w.name)}</h3>
     ${w.charges?`<div class="ch">${esc(w.charges)}</div>`:""}
     ${w.notes?`<div class="nt">${esc(w.notes)}</div>`:""}
-    <div class="ft"><span>MTF · BCSO</span><span>${esc(fmt(w.createdAt))}</span></div>
+    <div class="ft"><span>MTF</span><span>${esc(fmt(w.createdAt))}</span></div>
     ${canWrite?`<div class="pa"><button class="btn line sm" data-a="t" data-id="${esc(w.id)}">${w.caught?"إرجاع كمطلوب":"تم القبض"}</button><button class="btn line sm" data-a="e" data-id="${esc(w.id)}">تعديل</button>${delBtn("wanted",w.id)}</div>`:""}
   </article>`}).join(""):`<div class="empty" style="grid-column:1/-1">لا يوجد مطلوبين في هذا التصنيف.</div>`;
   $("#posters").querySelectorAll("[data-a]").forEach(b=>b.onclick=async()=>{const w=S.wanted.find(x=>x.id===b.dataset.id);if(!w)return;
@@ -679,7 +680,7 @@ renderTypeF();applyAccess();
 
 (async()=>{
   let d=null,u=null;try{[d,u]=await Promise.all([window.claude?claude.use("db"):null,window.claude?claude.use("user"):null])}catch(e){}
-  db=d;if(u){try{const c=await u.can("data.write");canWrite=c===null?!!db:!!c}catch(e){canWrite=!!db}}
+  db=d;if(u){try{canWrite=!!(await u.canEdit())&&!!db}catch(e){canWrite=!!db}}
   if(!db){db=localDB();localMode=true;canWrite=true}applyAccess();
   const sub=(col,key,fn)=>db.collection(col).onSnapshot(s=>{S[key]=s.docs.map(x=>({id:x.id,...x.data()}));fn();stats()},()=>{});
   sub("reports","reports",()=>{renderMap();if(S.sel&&!$("#drawer").hidden){const r=S.reports.find(x=>x.id===S.sel);if(r)openCase(r);else closeDrawer()}});
